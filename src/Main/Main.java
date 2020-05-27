@@ -16,6 +16,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Inventory currentInventory = new Inventory();
+        loadSampleData(currentInventory);
+        System.out.print(currentInventory.lookupPart(1).getName());
+
         Parent root = FXMLLoader.load(getClass().getResource("/Views/mainView.fxml"));
         primaryStage.setTitle("");
         primaryStage.setScene(new Scene(root));

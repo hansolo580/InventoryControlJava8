@@ -1,18 +1,64 @@
 package Controllers;
 
+import Models.Inventory;
+import Models.Part;
+import Models.Product;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import javax.xml.soap.Text;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class mainController {
+public class mainController implements Initializable {
+
+    Inventory currentInventory;
+
+    @FXML private TableView<Part> tableParts;
+    @FXML private TableView<Product> tableProducts;
+    private ObservableList<Part> partInv = FXCollections.observableArrayList();
+    private ObservableList<Product> productInv = FXCollections.observableArrayList();
+    @FXML private TextField partSearchInput;
+    @FXML private TextField productSearchInput;
+
+    public mainController(Inventory currentInventory) {
+        this.currentInventory = currentInventory;
+    }
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        loadParts();
+        loadProducts();
+    }
+
+    private void loadParts() {
+        partInv.setAll(currentInventory.getAllParts());
+
+        tableParts.setItems(partInv);
+        tableParts.refresh();
+    }
+
+    private void loadProducts() {
+        productInv.setAll(currentInventory.getAllProducts());
+
+        tableProducts.setItems(productInv);
+        tableProducts.refresh();
+    }
+
     @FXML
-    void Quit(ActionEvent event) {
+    private void Quit(ActionEvent event) {
         System.exit(0);
     }
 
@@ -60,5 +106,15 @@ public class mainController {
 
         window.setScene(modifyProductScene);
         window.show();
+    }
+
+    @FXML private void lookUpPart(ActionEvent event) {
+        {tableParts.setItems(currentInventory.lookupPart(partSearchInput.getText()));
+        tableParts.refresh();}
+    }
+
+    @FXML private void lookUpProduct(ActionEvent event) {
+        {tableProducts.setItems(currentInventory.lookupProduct(productSearchInput.getText()));
+        tableProducts.refresh();}
     }
 }
