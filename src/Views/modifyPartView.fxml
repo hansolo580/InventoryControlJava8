@@ -24,15 +24,15 @@
                 <Label layoutX="36.0" layoutY="202.0" text="Price/Cost" />
                 <Label layoutX="36.0" layoutY="248.0" text="Max" />
                 <Label fx:id="partLabel" layoutX="36.0" layoutY="293.0" text="Company Name" />
-                <TextField layoutX="139.0" layoutY="59.0" />
-                <TextField layoutX="139.0" layoutY="104.0" />
-                <TextField layoutX="139.0" layoutY="151.0" />
-                <TextField layoutX="139.0" layoutY="198.0" />
-                <TextField layoutX="139.0" layoutY="244.0" prefHeight="25.0" prefWidth="70.0" />
-                <TextField layoutX="140.0" layoutY="289.0" />
-                <TextField layoutX="274.0" layoutY="244.0" prefHeight="25.0" prefWidth="83.0" />
+                <TextField fx:id="modifyPartID" layoutX="139.0" layoutY="59.0" />
+                <TextField fx:id="modifyPartName" layoutX="139.0" layoutY="104.0" />
+                <TextField fx:id="modifyPartStock" layoutX="139.0" layoutY="151.0" />
+                <TextField fx:id="modifyPartPrice" layoutX="139.0" layoutY="198.0" />
+                <TextField fx:id="modifyPartMax" layoutX="139.0" layoutY="244.0" prefHeight="25.0" prefWidth="70.0" />
+                <TextField fx:id="modifyPartFlex" layoutX="140.0" layoutY="289.0" />
+                <TextField fx:id="modifyPartMin" layoutX="274.0" layoutY="244.0" prefHeight="25.0" prefWidth="83.0" />
                 <Label layoutX="227.0" layoutY="248.0" text="Min" />
-                <Button layoutX="223.0" layoutY="354.0" mnemonicParsing="false" text="Save" />
+                <Button layoutX="223.0" layoutY="354.0" mnemonicParsing="false" onAction="#modifyPartSave" text="Save" />
                 <Button layoutX="290.0" layoutY="354.0" mnemonicParsing="false" onAction="#changeScreenHome" text="Cancel" />
             </children>
         </AnchorPane>

@@ -12,8 +12,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import javax.xml.soap.Text;
@@ -25,7 +27,7 @@ public class mainController implements Initializable {
 
     Inventory currentInventory;
 
-    @FXML private TableView<Part> tableParts;
+    @FXML private TableView<Part> mainPartsTableView;
     @FXML private TableView<Product> tableProducts;
     private ObservableList<Part> partInv = FXCollections.observableArrayList();
     private ObservableList<Product> productInv = FXCollections.observableArrayList();
@@ -46,8 +48,8 @@ public class mainController implements Initializable {
     private void loadParts() {
         partInv.setAll(currentInventory.getAllParts());
 
-        tableParts.setItems(partInv);
-        tableParts.refresh();
+        mainPartsTableView.setItems(partInv);
+        mainPartsTableView.refresh();
     }
 
     private void loadProducts() {
@@ -109,12 +111,13 @@ public class mainController implements Initializable {
     }
 
     @FXML private void lookUpPart(ActionEvent event) {
-        {tableParts.setItems(currentInventory.lookupPart(partSearchInput.getText()));
-        tableParts.refresh();}
+        {mainPartsTableView.setItems(currentInventory.lookupPart(partSearchInput.getText()));
+        mainPartsTableView.refresh();}
     }
 
     @FXML private void lookUpProduct(ActionEvent event) {
         {tableProducts.setItems(currentInventory.lookupProduct(productSearchInput.getText()));
         tableProducts.refresh();}
     }
+
 }

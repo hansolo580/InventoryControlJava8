@@ -18,19 +18,19 @@
                 <Label layoutX="36.0" layoutY="155.0" text="Inv" />
                 <Label layoutX="36.0" layoutY="202.0" text="Price" />
                 <Label layoutX="36.0" layoutY="248.0" text="Max" />
-                <TextField layoutX="139.0" layoutY="59.0" />
-                <TextField layoutX="139.0" layoutY="104.0" />
-                <TextField layoutX="139.0" layoutY="151.0" />
-                <TextField layoutX="139.0" layoutY="198.0" />
-                <TextField layoutX="139.0" layoutY="244.0" prefHeight="25.0" prefWidth="70.0" />
-                <TextField layoutX="274.0" layoutY="244.0" prefHeight="25.0" prefWidth="83.0" />
+                <TextField fx:id="NewProductID" layoutX="139.0" layoutY="59.0" />
+                <TextField fx:id="NewProductName" layoutX="139.0" layoutY="104.0" />
+                <TextField fx:id="NewProductStock" layoutX="139.0" layoutY="151.0" />
+                <TextField fx:id="NewProductPrice" layoutX="139.0" layoutY="198.0" />
+                <TextField fx:id="NewProductMax" layoutX="139.0" layoutY="244.0" prefHeight="25.0" prefWidth="70.0" />
+                <TextField fx:id="NewProductMin" layoutX="274.0" layoutY="244.0" prefHeight="25.0" prefWidth="83.0" />
                 <Label layoutX="227.0" layoutY="248.0" text="Min" />
             </children>
         </AnchorPane>
         <AnchorPane layoutX="446.0" layoutY="27.0" prefHeight="414.0" prefWidth="437.0">
             <children>
-                <Button layoutX="117.0" layoutY="31.0" mnemonicParsing="false" text="Search" />
-                <TextField layoutX="190.0" layoutY="31.0" />
+                <Button layoutX="117.0" layoutY="31.0" mnemonicParsing="false" onAction="#addProductSearch" text="Search" />
+                <TextField fx:id="addProductSearchField" layoutX="190.0" layoutY="31.0" />
                 <TableView layoutX="17.0" layoutY="62.0" prefHeight="108.0" prefWidth="409.0">
                     <columns>
                         <TableColumn prefWidth="99.0" text="Part ID" />
@@ -39,7 +39,7 @@
                         <TableColumn prefWidth="106.0" text="Price per Unit" />
                     </columns>
                 </TableView>
-                <Button layoutX="353.0" layoutY="182.0" mnemonicParsing="false" text="Add" />
+                <Button layoutX="353.0" layoutY="182.0" mnemonicParsing="false" onAction="#addProductAdd" text="Add" />
                 <TableView layoutX="14.0" layoutY="214.0" prefHeight="108.0" prefWidth="409.0">
                     <columns>
                         <TableColumn prefWidth="89.0" text="Part ID" />
@@ -48,9 +48,9 @@
                         <TableColumn prefWidth="108.0" text="Price per Unit" />
                     </columns>
                 </TableView>
-                <Button layoutX="353.0" layoutY="336.0" mnemonicParsing="false" text="Delete" />
+                <Button layoutX="353.0" layoutY="336.0" mnemonicParsing="false" onAction="#addProductDelete" text="Delete" />
                 <Button layoutX="353.0" layoutY="375.0" mnemonicParsing="false" onAction="#changeScreenHome" text="Cancel" />
-                <Button layoutX="287.0" layoutY="375.0" mnemonicParsing="false" text="Save" />
+                <Button layoutX="287.0" layoutY="375.0" mnemonicParsing="false" onAction="#addProductSave" text="Save" />
             </children>
         </AnchorPane>
     </children>

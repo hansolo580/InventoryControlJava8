@@ -13,22 +13,30 @@ import Models.Outsourced;
 
 public class Main extends Application {
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         Inventory currentInventory = new Inventory();
         loadSampleData(currentInventory);
-        System.out.print(currentInventory.lookupPart(1).getName());
+        System.out.print("Sample data loaded.");
 
-        Parent root = FXMLLoader.load(getClass().getResource("/Views/mainView.fxml"));
-        primaryStage.setTitle("");
-        primaryStage.setScene(new Scene(root));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainView.fxml"));
+        Controllers.mainController controller = new Controllers.mainController(currentInventory);
+        loader.setController(controller);
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
         primaryStage.show();
+
+        //Parent root = FXMLLoader.load(getClass().getResource("/Views/mainView.fxml"));
+        //primaryStage.setTitle("");
+        //primaryStage.setScene(new Scene(root));
+        //primaryStage.show();
     }
 
-
-    public static void main(String[] args) {
-        launch(args);
-    }
 
     void loadSampleData(Inventory newInventory) {
         //InHouse
