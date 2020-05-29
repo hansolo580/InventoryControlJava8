@@ -30,11 +30,6 @@ public class Main extends Application {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        //Parent root = FXMLLoader.load(getClass().getResource("/Views/mainView.fxml"));
-        //primaryStage.setTitle("");
-        //primaryStage.setScene(new Scene(root));
-        //primaryStage.show();
     }
 
 

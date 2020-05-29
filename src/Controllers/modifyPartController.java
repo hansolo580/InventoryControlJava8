@@ -1,5 +1,6 @@
 package Controllers;
 
+import Models.Inventory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class modifyPartController {
+    Inventory currentInventory;
     public TextField modifyPartID;
     public TextField modifyPartName;
     public TextField modifyPartPrice;
@@ -33,12 +35,14 @@ public class modifyPartController {
     }
 
     public void changeScreenHome(ActionEvent event) throws IOException {
-        Parent homeParent = FXMLLoader.load(getClass().getResource("/Views/mainView.fxml"));
-        Scene homeScene = new Scene(homeParent);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainView.fxml"));
+        mainController controller = new mainController(currentInventory);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
-        window.setScene(homeScene);
+        loader.setController(controller);
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(scene);
         window.show();
     }
 

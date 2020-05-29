@@ -25,6 +25,10 @@ import java.util.ResourceBundle;
 
 public class mainController implements Initializable {
 
+    public TableColumn HomeProductIDCol;
+    public TableColumn HomeProductNameCol;
+    public TableColumn HomeProductStockCol;
+    public TableColumn HomePartPriceCol;
     Inventory currentInventory;
 
     @FXML private TableView<Part> mainPartsTableView;

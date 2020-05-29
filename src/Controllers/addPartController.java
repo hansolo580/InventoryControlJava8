@@ -69,9 +69,10 @@ public class addPartController implements Initializable {
         loader.setController(controller);
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
+    }
 
         //Parent homeParent = FXMLLoader.load(getClass().getResource("/Views/mainView.fxml"));
         //Scene homeScene = new Scene(homeParent);
@@ -80,7 +81,7 @@ public class addPartController implements Initializable {
 
         //window.setScene(homeScene);
         //window.show();
-    }
+
 
     public void addPartSave(ActionEvent actionEvent) {
     }

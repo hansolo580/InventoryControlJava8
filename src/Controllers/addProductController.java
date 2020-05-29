@@ -1,5 +1,6 @@
 package Controllers;
 
+import Models.Inventory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -11,6 +12,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class addProductController {
+    Inventory currentInventory;
     public TextField NewProductID;
     public TextField NewProductName;
     public TextField NewProductStock;
@@ -20,12 +22,14 @@ public class addProductController {
     public TextField addProductSearchField;
 
     public void changeScreenHome(ActionEvent event) throws IOException {
-        Parent homeParent = FXMLLoader.load(getClass().getResource("/Views/mainView.fxml"));
-        Scene homeScene = new Scene(homeParent);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainView.fxml"));
+        mainController controller = new mainController(currentInventory);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
-        window.setScene(homeScene);
+        loader.setController(controller);
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(scene);
         window.show();
     }
 
