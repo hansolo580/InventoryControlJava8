@@ -20,7 +20,10 @@ import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import static Controllers.alertMessages.confirmationWindow;
+
 public class addProductController implements Initializable {
+
     Inventory currentInventory;
 
     @FXML private TextField NewProductID;
@@ -76,7 +79,12 @@ public class addProductController implements Initializable {
         partSearchTableView.refresh();
     }
 
-    public void changeScreenHome(ActionEvent event) throws IOException {
+    @FXML public void cancel(ActionEvent event) throws IOException {
+        boolean confirm = confirmationWindow("Cancel?");
+        changeScreenHome(event);
+    }
+
+    @FXML public void changeScreenHome(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainView.fxml"));
         mainController controller = new mainController(currentInventory);
 
@@ -96,11 +104,14 @@ public class addProductController implements Initializable {
     @FXML private void addPart(ActionEvent actionEvent) {
         Part newPart = partSearchTableView.getSelectionModel().getSelectedItem();
 
-        associatedPartsList.add(newPart);
+
+        if (newPart != null) associatedPartsList.add(newPart);
+
         associatedPartsTableView.setItems(associatedPartsList);
     }
 
     @FXML private void removePart(ActionEvent actionEvent) {
+        boolean confirm = confirmationWindow("Cancel?");
         Part removePart = associatedPartsTableView.getSelectionModel().getSelectedItem();
         if (removePart != null) {
             associatedPartsList.remove(removePart);
@@ -122,6 +133,12 @@ public class addProductController implements Initializable {
     }
 
     public void addProductSave() {
+        if (Integer.parseInt(NewProductStock.getText()) < Integer.parseInt(NewProductMin.getText())) {
+            alertMessages.errorCount(1, NewProductStock);
+        }
+        if (Integer.parseInt(NewProductStock.getText()) > Integer.parseInt(NewProductMax.getText())) {
+            alertMessages.errorCount(1, NewProductStock);
+        }
         Product newProduct = new Product(Integer.parseInt(NewProductID.getText()), NewProductName.getText(),
                 Double.parseDouble(NewProductPrice.getText()), Integer.parseInt(NewProductStock.getText()),
                 Integer.parseInt(NewProductMin.getText()), Integer.parseInt(NewProductMax.getText()));

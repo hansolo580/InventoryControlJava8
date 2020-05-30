@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static Controllers.alertMessages.confirmationWindow;
+
 public class modifyProductController implements Initializable {
     Inventory currentInventory;
     Product currentProduct;
@@ -76,7 +78,7 @@ public class modifyProductController implements Initializable {
         window.show();
     }
 
-    public void modifyProductSave(ActionEvent event) throws IOException {
+    @FXML public void modifyProductSave(ActionEvent event) throws IOException {
         TextField[] fieldcount = {modifyProductStock, modifyProductPrice, modifyProductMin, modifyProductMax};
         if (Integer.parseInt(modifyProductMin.getText()) > Integer.parseInt(modifyProductMax.getText())) {
             //AlertMessage.errorProduct(10, modifyProductMin);
@@ -87,6 +89,13 @@ public class modifyProductController implements Initializable {
     }
 
     private void saveProduct() {
+        if (Integer.parseInt(modifyProductStock.getText()) < Integer.parseInt(modifyProductMin.getText())) {
+            alertMessages.errorCount(1, modifyProductStock);
+        }
+        if (Integer.parseInt(modifyProductStock.getText()) > Integer.parseInt(modifyProductMax.getText())) {
+            alertMessages.errorCount(1, modifyProductStock);
+        }
+
         Product newProduct = new Product(Integer.parseInt(modifyProductID.getText()), modifyProductName.getText(),
                 Double.parseDouble(modifyProductPrice.getText()), Integer.parseInt(modifyProductStock.getText()),
                 Integer.parseInt(modifyProductMin.getText()), Integer.parseInt(modifyProductMax.getText()));
@@ -117,6 +126,7 @@ public class modifyProductController implements Initializable {
     }
 
     @FXML private void removePart(ActionEvent event) {
+        boolean confirm = confirmationWindow("Cancel?");
         Part removePart = associatedPartsTable.getSelectionModel().getSelectedItem();
         associatedPartsList.remove(removePart);
         associatedPartsTable.refresh();
@@ -129,6 +139,7 @@ public class modifyProductController implements Initializable {
     }
 
     @FXML private void returnHome(ActionEvent event) throws IOException {
+        boolean confirm = confirmationWindow("Cancel?");
         changeScreenHome(event);
     }
 }

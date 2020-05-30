@@ -22,11 +22,14 @@ import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import static Controllers.alertMessages.confirmationWindow;
+
 public class addPartController implements Initializable {
 
-    public ToggleGroup partSourceToggleGroup;
+
     Inventory currentInventory;
 
+    @FXML public ToggleGroup partSourceToggleGroup;
     @FXML private Label partLabel;
     @FXML void AddPartButtonInternal(ActionEvent event) {
         partLabel.setText("Machine ID");
@@ -91,7 +94,12 @@ public class addPartController implements Initializable {
         return match != null;
     }
 
-    public void changeScreenHome(ActionEvent event) {
+    @FXML public void cancel(ActionEvent event){
+        boolean confirm = confirmationWindow("Cancel?");
+        changeScreenHome(event);
+    }
+
+    @FXML public void changeScreenHome(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainView.fxml"));
             mainController controller = new mainController(currentInventory);
@@ -107,14 +115,22 @@ public class addPartController implements Initializable {
         }
     }
 
-    @FXML
-    private void addPartSave(ActionEvent actionEvent) {
+    @FXML private void addPartSave(ActionEvent actionEvent) {
+        if (Integer.parseInt(NewStockField.getText()) < Integer.parseInt(NewMinField.getText())) {
+            alertMessages.errorCount(1, NewStockField);
+        }
+        if (Integer.parseInt(NewStockField.getText()) > Integer.parseInt(NewMaxField.getText())) {
+            alertMessages.errorCount(1, NewStockField);
+        }
+
+
         if (radioInternal.isSelected()) {
             addInternal();
         }
         if (radioExternal.isSelected()) {
             addExternal();
         }
+        changeScreenHome(actionEvent);
     }
 
     private void addInternal() {

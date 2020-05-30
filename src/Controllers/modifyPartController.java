@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static Controllers.alertMessages.confirmationWindow;
+
 public class modifyPartController implements Initializable {
     Inventory currentInventory;
     Part currentPart;
@@ -81,6 +83,7 @@ public class modifyPartController implements Initializable {
     }
 
     @FXML private void cancelGoHome(ActionEvent event) throws IOException {
+        boolean confirm = confirmationWindow("Cancel?");
         changeScreenHome(event);
     }
 
@@ -96,9 +99,13 @@ public class modifyPartController implements Initializable {
         window.show();
     }
 
-    public void modifyPartSave(ActionEvent actionEvent) throws IOException {
-        boolean end = false;
-        TextField[] fieldCount = {modifyPartStock, modifyPartPrice, modifyPartMin, modifyPartMax};
+    @FXML public void modifyPartSave(ActionEvent actionEvent) throws IOException {
+        if (Integer.parseInt(modifyPartStock.getText()) < Integer.parseInt(modifyPartMin.getText())) {
+            alertMessages.errorCount(1, modifyPartStock);
+        }
+        if (Integer.parseInt(modifyPartStock.getText()) > Integer.parseInt(modifyPartMax.getText())) {
+            alertMessages.errorCount(1, modifyPartStock);
+        }
         if (inHouseButton.isSelected()) {
             modifyItemInternal();
         }

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="453.0" prefWidth="891.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.addProductController">
+<AnchorPane prefHeight="453.0" prefWidth="891.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <AnchorPane layoutX="24.0" layoutY="27.0" prefHeight="400.0" prefWidth="363.0">
             <children>
@@ -33,23 +34,55 @@
                 <TextField fx:id="addProductSearchField" layoutX="190.0" layoutY="31.0" />
                 <TableView fx:id="partSearchTableView" layoutX="17.0" layoutY="62.0" prefHeight="108.0" prefWidth="409.0">
                     <columns>
-                        <TableColumn prefWidth="99.0" text="Part ID" />
-                        <TableColumn prefWidth="100.0" text="Part Name" />
-                        <TableColumn prefWidth="103.0" text="Inventory Level" />
-                        <TableColumn prefWidth="106.0" text="Price per Unit" />
+                        <TableColumn prefWidth="99.0" text="Part ID">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="ID" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="100.0" text="Part Name">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="name" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="103.0" text="Inventory Level">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="stock" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="106.0" text="Price per Unit">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="price" />
+                            </cellValueFactory>
+                        </TableColumn>
                     </columns>
                 </TableView>
                 <Button layoutX="353.0" layoutY="182.0" mnemonicParsing="false" onAction="#addPart" text="Add" />
-                <TableView fx:id="associatedPartsTableVIew" layoutX="14.0" layoutY="214.0" prefHeight="108.0" prefWidth="409.0">
+                <TableView fx:id="associatedPartsTableView" layoutX="14.0" layoutY="214.0" prefHeight="108.0" prefWidth="409.0">
                     <columns>
-                        <TableColumn prefWidth="89.0" text="Part ID" />
-                        <TableColumn prefWidth="102.0" text="Part Name" />
-                        <TableColumn prefWidth="109.0" text="Inventory Level" />
-                        <TableColumn prefWidth="108.0" text="Price per Unit" />
+                        <TableColumn prefWidth="89.0" text="Part ID">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="ID" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="102.0" text="Part Name">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="name" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="109.0" text="Inventory Level">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="stock" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="108.0" text="Price per Unit">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="price" />
+                            </cellValueFactory>
+                        </TableColumn>
                     </columns>
                 </TableView>
                 <Button layoutX="353.0" layoutY="336.0" mnemonicParsing="false" onAction="#removePart" text="Delete" />
-                <Button layoutX="353.0" layoutY="375.0" mnemonicParsing="false" onAction="#changeScreenHome" text="Cancel" />
+                <Button layoutX="353.0" layoutY="375.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
                 <Button layoutX="287.0" layoutY="375.0" mnemonicParsing="false" onAction="#addProductAdd" text="Save" />
             </children>
         </AnchorPane>

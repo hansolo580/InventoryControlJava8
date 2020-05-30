@@ -13,16 +13,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
-import javax.xml.soap.Text;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static Controllers.alertMessages.confirmationWindow;
 
 public class mainController implements Initializable {
 
@@ -62,12 +60,11 @@ public class mainController implements Initializable {
         tableProducts.refresh();
     }
 
-    @FXML
-    private void Quit(ActionEvent event) {
+    @FXML private void Quit(ActionEvent event) {
         System.exit(0);
     }
 
-    public void changeScreenAddPart(ActionEvent event) {
+    @FXML private void changeScreenAddPart(ActionEvent event) {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/addPartView.fxml"));
@@ -80,13 +77,13 @@ public class mainController implements Initializable {
             window.setScene(scene);
             window.show();
         } catch (IOException e) {
-
+            System.out.print("Something went wrong");
         }
     }
 
     // This changes to ModifyPartView
 
-    public void changeScreenModifyPart(ActionEvent event) {
+    @FXML private void changeScreenModifyPart(ActionEvent event) {
         try {
             Part selectedPart = mainPartsTableView.getSelectionModel().getSelectedItem();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/modifyPartView.fxml"));
@@ -105,19 +102,25 @@ public class mainController implements Initializable {
 
     //Changes to AddProductView
 
-    public void changeScreenAddProduct(ActionEvent event) throws IOException {
-        Parent addProductParent = FXMLLoader.load(getClass().getResource("/Views/AddProductView.fxml"));
-        Scene addProductScene = new Scene(addProductParent);
+    @FXML private void changeScreenAddProduct(ActionEvent event) throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/addProductView.fxml"));
+            addProductController controller = new addProductController(currentInventory);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
-        window.setScene(addProductScene);
-        window.show();
+            loader.setController(controller);
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.show();
+        } catch (IOException e) {
+            System.out.print("Something went wrong");
+        }
     }
 
     //Changes to ModifyProductView
 
-    public void changeScreenModifyProduct(ActionEvent event) throws IOException {
+    @FXML private void changeScreenModifyProduct(ActionEvent event) throws IOException {
         Product selectedProduct = tableProducts.getSelectionModel().getSelectedItem();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/modifyProductView.fxml"));
@@ -138,6 +141,7 @@ public class mainController implements Initializable {
 
     @FXML private void removePart(ActionEvent event) {
         Part removePart = mainPartsTableView.getSelectionModel().getSelectedItem();
+        boolean confirm = confirmationWindow(removePart.getName());
         currentInventory.deletePart(removePart.getID());
         partInv.remove(removePart);
         mainPartsTableView.refresh();
@@ -150,19 +154,10 @@ public class mainController implements Initializable {
 
     @FXML private void removeProduct(ActionEvent event) {
         Product removeProduct = tableProducts.getSelectionModel().getSelectedItem();
+        boolean confirm = confirmationWindow(removeProduct.getName());
         currentInventory.deleteProduct(removeProduct.getID());
         productInv.remove(removeProduct);
         tableProducts.refresh();
-    }
-
-    private void errorWindow(int code) {
-        if (code == 1) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Whoops");
-            alert.setHeaderText("Something went wrong!");
-            alert.setContentText("Isn't this error message's vagueness super helpful?");
-            alert.showAndWait();
-        }
     }
 
 }
