@@ -21,7 +21,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Inventory currentInventory = new Inventory();
         loadSampleData(currentInventory);
-        System.out.print("Sample data loaded.");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainView.fxml"));
         Controllers.mainController controller = new Controllers.mainController(currentInventory);
@@ -46,5 +45,6 @@ public class Main extends Application {
         testProduct1.addAssociatedPart(testPart1);
         testProduct1.addAssociatedPart(testPart2);
         newInventory.addProduct(testProduct1);
+        System.out.print(testPart1.getID());
     }
 }

@@ -13,11 +13,11 @@
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Label>
-                <RadioButton layoutX="117.0" layoutY="14.0" mnemonicParsing="false" onAction="#AddPartButtonInternal" text="In-House">
+                <RadioButton fx:id="radioInternal" layoutX="117.0" layoutY="14.0" mnemonicParsing="false" onAction="#AddPartButtonInternal" text="In-House">
                     <toggleGroup>
                         <ToggleGroup fx:id="partSourceToggleGroup" />
                     </toggleGroup></RadioButton>
-                <RadioButton layoutX="229.0" layoutY="14.0" mnemonicParsing="false" onAction="#AddPartButtonOutsourced" text="Outsourced" toggleGroup="$partSourceToggleGroup" />
+                <RadioButton fx:id="radioExternal" layoutX="229.0" layoutY="14.0" mnemonicParsing="false" onAction="#AddPartButtonOutsourced" text="Outsourced" toggleGroup="$partSourceToggleGroup" />
                 <Label layoutX="36.0" layoutY="63.0" text="ID" />
                 <Label layoutX="36.0" layoutY="108.0" text="Name" />
                 <Label layoutX="36.0" layoutY="155.0" text="Inv" />

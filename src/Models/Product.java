@@ -84,8 +84,7 @@ public class Product {
     }
 
     public boolean deleteAssociatedPart(int byePart){
-        int i;
-        for (i = 0; i < associatedParts.size(); i++) {
+        for (int i = 0; i < associatedParts.size(); i++) {
             if (associatedParts.get(i).getID() == byePart) {
                 associatedParts.remove(i);
                 return true;
@@ -95,7 +94,18 @@ public class Product {
         return false;
     }
 
+    public Part lookupAssociatedPart(int partToSearch) {
+        for (Part associatedPart : associatedParts) {
+            if (associatedPart.getID() == partToSearch) {
+                return associatedPart;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<Part> getAllAssociatedParts() {
         return associatedParts;
     }
+
+    public int getAssociatedPartsSize() {return associatedParts.size();}
 }

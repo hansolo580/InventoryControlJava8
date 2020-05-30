@@ -13,11 +13,11 @@
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Label>
-                <RadioButton layoutX="117.0" layoutY="14.0" mnemonicParsing="false" onAction="#AddPartButtonInternal" text="In-House">
+                <RadioButton fx:id="inHouseButton" layoutX="117.0" layoutY="14.0" mnemonicParsing="false" onAction="#selectedInternal" text="In-House">
                     <toggleGroup>
                         <ToggleGroup fx:id="partSourceToggleGroup" />
                     </toggleGroup></RadioButton>
-                <RadioButton layoutX="229.0" layoutY="14.0" mnemonicParsing="false" onAction="#AddPartButtonOutsourced" text="Outsourced" toggleGroup="$partSourceToggleGroup" />
+                <RadioButton fx:id="outsourcedButton" layoutX="229.0" layoutY="14.0" mnemonicParsing="false" onAction="#selectedExternal" text="Outsourced" toggleGroup="$partSourceToggleGroup" />
                 <Label layoutX="36.0" layoutY="63.0" text="ID" />
                 <Label layoutX="36.0" layoutY="108.0" text="Name" />
                 <Label layoutX="36.0" layoutY="155.0" text="Inv" />
@@ -33,7 +33,7 @@
                 <TextField fx:id="modifyPartMin" layoutX="274.0" layoutY="244.0" prefHeight="25.0" prefWidth="83.0" />
                 <Label layoutX="227.0" layoutY="248.0" text="Min" />
                 <Button layoutX="223.0" layoutY="354.0" mnemonicParsing="false" onAction="#modifyPartSave" text="Save" />
-                <Button layoutX="290.0" layoutY="354.0" mnemonicParsing="false" onAction="#changeScreenHome" text="Cancel" />
+                <Button layoutX="290.0" layoutY="354.0" mnemonicParsing="false" onAction="#cancelGoHome" text="Cancel" />
             </children>
         </AnchorPane>
     </children>

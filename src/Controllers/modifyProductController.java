@@ -1,25 +1,68 @@
 package Controllers;
 
 import Models.Inventory;
+import Models.Part;
+import Models.Product;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class modifyProductController {
+public class modifyProductController implements Initializable {
     Inventory currentInventory;
-    public TextField modifyProductID;
-    public TextField modifyProductName;
-    public TextField modifyProductStock;
-    public TextField modifyProductPrice;
-    public TextField modifyProductMax;
-    public TextField modifyProductMin;
-    public TextField modifyProductSearchField;
+    Product currentProduct;
+
+    @FXML private TextField modifyProductID;
+    @FXML private TextField modifyProductName;
+    @FXML private TextField modifyProductStock;
+    @FXML private TextField modifyProductPrice;
+    @FXML private TextField modifyProductMax;
+    @FXML private TextField modifyProductMin;
+    @FXML private TableView<Part> associatedPartsTable;
+    @FXML private TableView<Part> partSearchTable;
+    @FXML private TextField partSearchInput;
+    private ObservableList<Part> partInv = FXCollections.observableArrayList();
+    private ObservableList<Part> partInvSearch = FXCollections.observableArrayList();
+    private ObservableList<Part> associatedPartsList = FXCollections.observableArrayList();
+
+    public modifyProductController(Inventory currentInventory, Product currentProduct) {
+        this.currentInventory = currentInventory;
+        this.currentProduct = currentProduct;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        loadSearchTable();
+        parseData();
+    }
+
+    private void loadSearchTable() {
+        partInv.setAll(currentInventory.getAllParts());
+
+        partSearchTable.setItems(partInv);
+        partSearchTable.refresh();
+    }
+
+    @FXML private void modifyProductSearch(ActionEvent event) {
+        for (Part i : currentInventory.getAllParts()) {
+            if (i.getName().contains(partSearchInput.getText())) {
+                partInvSearch.add(i);
+            }
+        }
+        partSearchTable.setItems(partInvSearch);
+    }
 
     public void changeScreenHome(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainView.fxml"));
@@ -33,15 +76,59 @@ public class modifyProductController {
         window.show();
     }
 
-    public void modifyProductDelete(ActionEvent actionEvent) {
+    public void modifyProductSave(ActionEvent event) throws IOException {
+        TextField[] fieldcount = {modifyProductStock, modifyProductPrice, modifyProductMin, modifyProductMax};
+        if (Integer.parseInt(modifyProductMin.getText()) > Integer.parseInt(modifyProductMax.getText())) {
+            //AlertMessage.errorProduct(10, modifyProductMin);
+        }
+
+        saveProduct();
+        changeScreenHome(event);
     }
 
-    public void modifyProductSave(ActionEvent actionEvent) {
+    private void saveProduct() {
+        Product newProduct = new Product(Integer.parseInt(modifyProductID.getText()), modifyProductName.getText(),
+                Double.parseDouble(modifyProductPrice.getText()), Integer.parseInt(modifyProductStock.getText()),
+                Integer.parseInt(modifyProductMin.getText()), Integer.parseInt(modifyProductMax.getText()));
+
+        for (Part part : associatedPartsList) {
+            newProduct.addAssociatedPart(part);
+        }
+
+        currentInventory.updateProduct(newProduct);
     }
 
-    public void modifyProductAdd(ActionEvent actionEvent) {
+    private void parseData() {
+        for (int i = 0; i < 1000; i++) {
+            Part partToFind = currentProduct.lookupAssociatedPart(i);
+            if (partToFind != null) {
+                associatedPartsList.add(partToFind);
+            }
+        }
+
+        associatedPartsTable.setItems(associatedPartsList);
+
+        this.modifyProductName.setText(currentProduct.getName());
+        this.modifyProductID.setText(Integer.toString(currentProduct.getID()));
+        this.modifyProductStock.setText(Integer.toString(currentProduct.getStock()));
+        this.modifyProductPrice.setText(Double.toString(currentProduct.getPrice()));
+        this.modifyProductMin.setText(Integer.toString(currentProduct.getMin()));
+        this.modifyProductMax.setText(Integer.toString(currentProduct.getMax()));
     }
 
-    public void modifyProductSearch(ActionEvent actionEvent) {
+    @FXML private void removePart(ActionEvent event) {
+        Part removePart = associatedPartsTable.getSelectionModel().getSelectedItem();
+        associatedPartsList.remove(removePart);
+        associatedPartsTable.refresh();
+    }
+
+    @FXML private void addPart(ActionEvent event) {
+        Part newPart = partSearchTable.getSelectionModel().getSelectedItem();
+        associatedPartsList.add(newPart);
+        associatedPartsTable.setItems(associatedPartsList);
+    }
+
+    @FXML private void returnHome(ActionEvent event) throws IOException {
+        changeScreenHome(event);
     }
 }

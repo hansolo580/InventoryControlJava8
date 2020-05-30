@@ -17,7 +17,7 @@ public class Inventory {
     //adds
 
     public void addPart(Part newPart) {
-        this.partInv.add(newPart);
+            this.partInv.add(newPart);
     }
 
     public void addProduct(Product newProduct) {
@@ -27,18 +27,18 @@ public class Inventory {
     //lookups
 
     public Part lookupPart(int partId) {
-        for (int i = 0; i < partInv.size(); i++) {
-            if (partInv.get(i).getID() == partId) {
-                return partInv.get(i);
+        for (Part part : partInv) {
+            if (part.getID() == partId) {
+                return part;
             }
         }
         return null;
     }
 
     public Product lookupProduct(int productId) {
-        for (int i = 0; i < productInv.size(); i++) {
-            if (productInv.get(i).getID() == productId) {
-                return productInv.get(i);
+        for (Product product : productInv) {
+            if (product.getID() == productId) {
+                return product;
             }
         }
         return null;
@@ -111,9 +111,9 @@ public class Inventory {
     //search
 
     public Part lookUpPart(int selectedPart) {
-        for (int i = 0; i < partInv.size(); i++) {
-            if (partInv.get(i).getID() == selectedPart) {
-                return partInv.get(i);
+        for (Part part : partInv) {
+            if (part.getID() == selectedPart) {
+                return part;
             }
         }
         return null;
@@ -130,9 +130,9 @@ public class Inventory {
     }
 
     public Product lookUpProduct(int selectedProduct) {
-        for (int i = 0; i < productInv.size(); i++) {
-            if (productInv.get(i).getID() == selectedProduct) {
-                return productInv.get(i);
+        for (Product product : productInv) {
+            if (product.getID() == selectedProduct) {
+                return product;
             }
         }
         return null;
@@ -151,7 +151,6 @@ public class Inventory {
                 return;
             }
         }
-        return;
     }
 
     public void updateProduct(Product selectedProduct) {
@@ -161,8 +160,10 @@ public class Inventory {
                 return;
             }
         }
-        return;
     }
 
+    public int partInvSize() {return partInv.size();}
+
+    public int productInvSize() {return productInv.size();}
 
 }

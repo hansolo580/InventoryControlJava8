@@ -1,6 +1,9 @@
 package Controllers;
 
+import Models.InHouse;
 import Models.Inventory;
+import Models.Outsourced;
+import Models.Part;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +19,7 @@ import javafx.stage.Stage;
 import javax.xml.soap.Text;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class addPartController implements Initializable {
@@ -24,8 +28,7 @@ public class addPartController implements Initializable {
     Inventory currentInventory;
 
     @FXML private Label partLabel;
-    @FXML
-    void AddPartButtonInternal(ActionEvent event) {
+    @FXML void AddPartButtonInternal(ActionEvent event) {
         partLabel.setText("Machine ID");
     }
     @FXML void AddPartButtonOutsourced(ActionEvent event) {
@@ -41,48 +44,90 @@ public class addPartController implements Initializable {
     @FXML private RadioButton radioInternal;
     @FXML private RadioButton radioExternal;
 
-    public void addPartController(Inventory currentInventory) {
+    public addPartController(Inventory currentInventory) {
         this.currentInventory = currentInventory;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-      //  setFields();
+        generatePartID();
+        setFields();
     }
 
-    //private void setFields() {
-     //   id.setText("Part ID");
-      //  name.setText("Part Name");
-      //  count.setText("Current Inventory");
-      //  price.setText("Price");
-      //  min.setText("Min");
-     //   max.setText("Max");
-      //  company.setText("Company");
-     //   partLabel.setText("Company");
-      //  radioExternal.setSelected(true);
-   // }
-
-    public void changeScreenHome(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainView.fxml"));
-        mainController controller = new mainController(currentInventory);
-
-        loader.setController(controller);
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
+    private void setFields() {
+        NewIDField.setText("Part ID");
+        NewNameField.setText("Part Name");
+        NewStockField.setText("Current Inventory");
+        NewPriceField.setText("Price");
+        NewMinField.setText("Min");
+        NewMaxField.setText("Max");
+        NewFlexField.setText("Company");
+        partLabel.setText("Company");
+        radioExternal.setSelected(true);
     }
 
-        //Parent homeParent = FXMLLoader.load(getClass().getResource("/Views/mainView.fxml"));
-        //Scene homeScene = new Scene(homeParent);
+    private void generatePartID() {
+        boolean match;
+        Random randomNum = new Random();
+        Integer num = randomNum.nextInt(1000);
 
-        //Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        if (currentInventory.partInvSize() == 0) {
+            NewIDField.setText(num.toString());
+        }
+        else {
+            match = findIfTaken(num);
 
-        //window.setScene(homeScene);
-        //window.show();
+            if (!match) {
+                NewIDField.setText(num.toString());
+            }
+            else {
+                generatePartID();
+            }
+        }
+    }
 
+    private boolean findIfTaken(Integer num) {
+        Part match = currentInventory.lookupPart(num);
+        return match != null;
+    }
 
-    public void addPartSave(ActionEvent actionEvent) {
+    public void changeScreenHome(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainView.fxml"));
+            mainController controller = new mainController(currentInventory);
+
+            loader.setController(controller);
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.show();
+        } catch (IOException e) {
+
+        }
+    }
+
+    @FXML
+    private void addPartSave(ActionEvent actionEvent) {
+        if (radioInternal.isSelected()) {
+            addInternal();
+        }
+        if (radioExternal.isSelected()) {
+            addExternal();
+        }
+    }
+
+    private void addInternal() {
+        currentInventory.addPart(new InHouse(Integer.parseInt(NewIDField.getText()),NewNameField.getText(),
+                Integer.parseInt(NewPriceField.getText()), Integer.parseInt(NewStockField.getText()),
+                Integer.parseInt(NewMinField.getText()), Integer.parseInt(NewMaxField.getText()),
+                Integer.parseInt(NewFlexField.getText())));
+    }
+
+    private void addExternal() {
+        currentInventory.addPart(new Outsourced(Integer.parseInt(NewIDField.getText()),NewNameField.getText(),
+                Integer.parseInt(NewPriceField.getText()), Integer.parseInt(NewStockField.getText()),
+                Integer.parseInt(NewMinField.getText()), Integer.parseInt(NewMaxField.getText()),
+                NewFlexField.getText()));
     }
 }
