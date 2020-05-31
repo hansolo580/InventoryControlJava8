@@ -58,7 +58,6 @@ public class addPartController implements Initializable {
     }
 
     private void setFields() {
-        NewIDField.setText("Part ID");
         NewNameField.setText("Part Name");
         NewStockField.setText("Current Inventory");
         NewPriceField.setText("Price");
@@ -96,7 +95,9 @@ public class addPartController implements Initializable {
 
     @FXML public void cancel(ActionEvent event){
         boolean confirm = confirmationWindow("Cancel?");
-        changeScreenHome(event);
+        if (confirm) {
+            changeScreenHome(event);
+        }
     }
 
     @FXML public void changeScreenHome(ActionEvent event) {

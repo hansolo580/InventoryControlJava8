@@ -18,7 +18,7 @@ public class Product {
     private int max;
 
     //Constructor
-    public Product(int ID, String name, double price, int Stock, int min, int max) {
+    public Product(int ID, String name, double price, int stock, int min, int max) {
         setID(ID);
         setName(name);
         setPrice(price);

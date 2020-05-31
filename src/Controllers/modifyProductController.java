@@ -58,12 +58,11 @@ public class modifyProductController implements Initializable {
     }
 
     @FXML private void modifyProductSearch(ActionEvent event) {
-        for (Part i : currentInventory.getAllParts()) {
-            if (i.getName().contains(partSearchInput.getText())) {
-                partInvSearch.add(i);
-            }
+        if (!partSearchInput.getText().trim().isEmpty()) {
+            partInv.clear();
+            partSearchTable.setItems(currentInventory.lookupPart(partSearchInput.getText().trim()));
+            partSearchTable.refresh();
         }
-        partSearchTable.setItems(partInvSearch);
     }
 
     public void changeScreenHome(ActionEvent event) throws IOException {
@@ -140,6 +139,8 @@ public class modifyProductController implements Initializable {
 
     @FXML private void returnHome(ActionEvent event) throws IOException {
         boolean confirm = confirmationWindow("Cancel?");
-        changeScreenHome(event);
+        if (confirm) {
+            changeScreenHome(event);
+        }
     }
 }

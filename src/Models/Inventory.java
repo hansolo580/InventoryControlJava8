@@ -27,10 +27,25 @@ public class Inventory {
     //lookups
 
     public Part lookupPart(int partId) {
-        for (Part part : partInv) {
-            if (part.getID() == partId) {
-                return part;
+        if (!partInv.isEmpty()) {
+            for (Part part : partInv) {
+                if (part.getID() == partId) {
+                    return part;
+                }
             }
+        }
+        return null;
+    }
+
+    public ObservableList<Part> lookupPart(String partToFind) {
+        if (!partInv.isEmpty()) {
+            ObservableList partSearchResults = FXCollections.observableArrayList();
+            for (Part part : getAllParts()) {
+                if (part.getName().toLowerCase().contains(partToFind.toLowerCase())) {
+                    partSearchResults.add(part);
+                }
+            }
+            return partSearchResults;
         }
         return null;
     }
@@ -44,26 +59,15 @@ public class Inventory {
         return null;
     }
 
-    public ObservableList<Part> lookupPart(String partName) {
-        ObservableList partSearchResults = FXCollections.observableArrayList();
-        for (Part j : getAllParts()) {
-            if (j.getName().contains(partName)) {
-                partSearchResults.add(j);
-            }
-            return partSearchResults;
-        }
-        return null;
-    }
-
     public ObservableList<Product> lookupProduct(String productName) {
         ObservableList productSearchResults = FXCollections.observableArrayList();
         for (Product j: getAllProducts()) {
-            if (j.getName().contains(productName)) {
+            if (j.getName().toLowerCase().contains(productName.toLowerCase())) {
                 productSearchResults.add(j);
             }
-            return productSearchResults;
+
         }
-        return null;
+        return productSearchResults;
     }
 
     //updates
@@ -119,11 +123,11 @@ public class Inventory {
         return null;
     }
 
-    public ObservableList<Part> lookUpPart(String selectedPart) {
+    public ObservableList<Part> lookUpPart(String selectedPartName) {
         ObservableList lookUpListParts = FXCollections.observableArrayList();
-        for (Part i : getAllParts()) {
-            if (i.getName().contains(selectedPart)) {
-                lookUpListParts.add(i);
+        for (Part part : getAllParts()) {
+            if (part.getName().toLowerCase().contains(selectedPartName.toLowerCase())) {
+                lookUpListParts.add(part);
             }
         }
         return lookUpListParts;

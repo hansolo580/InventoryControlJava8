@@ -81,7 +81,9 @@ public class addProductController implements Initializable {
 
     @FXML public void cancel(ActionEvent event) throws IOException {
         boolean confirm = confirmationWindow("Cancel?");
-        changeScreenHome(event);
+        if (confirm) {
+            changeScreenHome(event);
+        }
     }
 
     @FXML public void changeScreenHome(ActionEvent event) throws IOException {
@@ -96,9 +98,12 @@ public class addProductController implements Initializable {
         window.show();
     }
 
-    @FXML public void addProductSearch(ActionEvent actionEvent) {
-        partSearchTableView.setItems(currentInventory.lookupPart(addProductSearchField.getText()));
-        partSearchTableView.refresh();
+    @FXML private void addProductSearch(ActionEvent actionEvent) {
+        if (!addProductSearchField.getText().trim().isEmpty()) {
+            partInv.clear();
+            partSearchTableView.setItems(currentInventory.lookupPart(addProductSearchField.getText().trim()));
+            partSearchTableView.refresh();
+        }
     }
 
     @FXML private void addPart(ActionEvent actionEvent) {

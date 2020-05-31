@@ -24,7 +24,7 @@
                 <Label layoutX="36.0" layoutY="202.0" text="Price/Cost" />
                 <Label layoutX="36.0" layoutY="248.0" text="Max" />
                 <Label fx:id="partLabel" layoutX="36.0" layoutY="293.0" text="Company Name" />
-                <TextField fx:id="modifyPartID" layoutX="139.0" layoutY="59.0" />
+                <TextField fx:id="modifyPartID" editable="false" layoutX="139.0" layoutY="59.0" style="-fx-background-color: cdcdcd;" />
                 <TextField fx:id="modifyPartName" layoutX="139.0" layoutY="104.0" />
                 <TextField fx:id="modifyPartStock" layoutX="139.0" layoutY="151.0" />
                 <TextField fx:id="modifyPartPrice" layoutX="139.0" layoutY="198.0" />

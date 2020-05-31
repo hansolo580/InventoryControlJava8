@@ -19,7 +19,8 @@
                 <Label layoutX="36.0" layoutY="155.0" text="Inv" />
                 <Label layoutX="36.0" layoutY="202.0" text="Price" />
                 <Label layoutX="36.0" layoutY="248.0" text="Max" />
-                <TextField fx:id="NewProductID" layoutX="139.0" layoutY="59.0" />
+                <TextField fx:id="NewProductID" editable="false" layoutX="139.0" layoutY="59.0" text="Auto Gen - Disabled"
+                           style="-fx-background-color: cdcdcd;"/>
                 <TextField fx:id="NewProductName" layoutX="139.0" layoutY="104.0" />
                 <TextField fx:id="NewProductStock" layoutX="139.0" layoutY="151.0" />
                 <TextField fx:id="NewProductPrice" layoutX="139.0" layoutY="198.0" />

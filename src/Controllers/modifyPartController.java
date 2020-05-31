@@ -84,7 +84,9 @@ public class modifyPartController implements Initializable {
 
     @FXML private void cancelGoHome(ActionEvent event) throws IOException {
         boolean confirm = confirmationWindow("Cancel?");
-        changeScreenHome(event);
+        if (confirm) {
+            changeScreenHome(event);
+        }
     }
 
     public void changeScreenHome(ActionEvent event) throws IOException {
