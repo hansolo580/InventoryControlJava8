@@ -110,11 +110,12 @@ public class modifyPartController implements Initializable {
         }
         if (inHouseButton.isSelected()) {
             modifyItemInternal();
+            changeScreenHome(actionEvent);
         }
         if (outsourcedButton.isSelected()) {
             modifyItemExternal();
+            changeScreenHome(actionEvent);
         }
-        changeScreenHome(actionEvent);
     }
 
     private void modifyItemInternal() {

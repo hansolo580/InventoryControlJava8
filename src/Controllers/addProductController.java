@@ -141,16 +141,18 @@ public class addProductController implements Initializable {
         if (Integer.parseInt(NewProductStock.getText()) < Integer.parseInt(NewProductMin.getText())) {
             alertMessages.errorCount(1, NewProductStock);
         }
-        if (Integer.parseInt(NewProductStock.getText()) > Integer.parseInt(NewProductMax.getText())) {
+        else if (Integer.parseInt(NewProductStock.getText()) > Integer.parseInt(NewProductMax.getText())) {
             alertMessages.errorCount(1, NewProductStock);
         }
-        Product newProduct = new Product(Integer.parseInt(NewProductID.getText()), NewProductName.getText(),
-                Double.parseDouble(NewProductPrice.getText()), Integer.parseInt(NewProductStock.getText()),
-                Integer.parseInt(NewProductMin.getText()), Integer.parseInt(NewProductMax.getText()));
-        for (Part part : associatedPartsList) {
-            newProduct.addAssociatedPart(part);
-        }
+        else {
+            Product newProduct = new Product(Integer.parseInt(NewProductID.getText()), NewProductName.getText(),
+                    Double.parseDouble(NewProductPrice.getText()), Integer.parseInt(NewProductStock.getText()),
+                    Integer.parseInt(NewProductMin.getText()), Integer.parseInt(NewProductMax.getText()));
+            for (Part part : associatedPartsList) {
+                newProduct.addAssociatedPart(part);
+            }
 
-        currentInventory.addProduct(newProduct);
+            currentInventory.addProduct(newProduct);
+        }
     }
 }

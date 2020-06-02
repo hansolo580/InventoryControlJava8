@@ -94,16 +94,18 @@ public class modifyProductController implements Initializable {
         if (Integer.parseInt(modifyProductStock.getText()) > Integer.parseInt(modifyProductMax.getText())) {
             alertMessages.errorCount(1, modifyProductStock);
         }
+        else {
+            Product newProduct = new Product(Integer.parseInt(modifyProductID.getText()), modifyProductName.getText(),
+                    Double.parseDouble(modifyProductPrice.getText()), Integer.parseInt(modifyProductStock.getText()),
+                    Integer.parseInt(modifyProductMin.getText()), Integer.parseInt(modifyProductMax.getText()));
 
-        Product newProduct = new Product(Integer.parseInt(modifyProductID.getText()), modifyProductName.getText(),
-                Double.parseDouble(modifyProductPrice.getText()), Integer.parseInt(modifyProductStock.getText()),
-                Integer.parseInt(modifyProductMin.getText()), Integer.parseInt(modifyProductMax.getText()));
+            for (Part part : associatedPartsList) {
+                newProduct.addAssociatedPart(part);
+            }
 
-        for (Part part : associatedPartsList) {
-            newProduct.addAssociatedPart(part);
+            currentInventory.updateProduct(newProduct);
         }
 
-        currentInventory.updateProduct(newProduct);
     }
 
     private void parseData() {

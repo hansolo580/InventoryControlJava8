@@ -41,7 +41,7 @@ public class Main extends Application {
         newInventory.addPart(testPart2);
 
         //Products
-        Product testProduct1 = new Product(3, "Test Product 1", 15.34, 15, 1, 8);
+        Product testProduct1 = new Product(3, "Test Product 1", 15.34, 15, 1, 20);
         testProduct1.addAssociatedPart(testPart1);
         testProduct1.addAssociatedPart(testPart2);
         newInventory.addProduct(testProduct1);
