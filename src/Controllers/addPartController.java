@@ -120,30 +120,30 @@ public class addPartController implements Initializable {
         if (Integer.parseInt(NewStockField.getText()) < Integer.parseInt(NewMinField.getText())) {
             alertMessages.errorCount(1, NewStockField);
         }
-        if (Integer.parseInt(NewStockField.getText()) > Integer.parseInt(NewMaxField.getText())) {
+        else if (Integer.parseInt(NewStockField.getText()) > Integer.parseInt(NewMaxField.getText())) {
             alertMessages.errorCount(1, NewStockField);
         }
-
-
-        if (radioInternal.isSelected()) {
+        else if (radioInternal.isSelected()) {
             addInternal();
+            changeScreenHome(actionEvent);
         }
-        if (radioExternal.isSelected()) {
+        else if (radioExternal.isSelected()) {
             addExternal();
+            changeScreenHome(actionEvent);
         }
-        changeScreenHome(actionEvent);
+
     }
 
     private void addInternal() {
         currentInventory.addPart(new InHouse(Integer.parseInt(NewIDField.getText()),NewNameField.getText(),
-                Integer.parseInt(NewPriceField.getText()), Integer.parseInt(NewStockField.getText()),
+                Integer.parseInt(NewStockField.getText()), Double.parseDouble(NewPriceField.getText()),
                 Integer.parseInt(NewMinField.getText()), Integer.parseInt(NewMaxField.getText()),
                 Integer.parseInt(NewFlexField.getText())));
     }
 
     private void addExternal() {
         currentInventory.addPart(new Outsourced(Integer.parseInt(NewIDField.getText()),NewNameField.getText(),
-                Integer.parseInt(NewPriceField.getText()), Integer.parseInt(NewStockField.getText()),
+                 Integer.parseInt(NewStockField.getText()), Double.parseDouble(NewPriceField.getText()),
                 Integer.parseInt(NewMinField.getText()), Integer.parseInt(NewMaxField.getText()),
                 NewFlexField.getText()));
     }
