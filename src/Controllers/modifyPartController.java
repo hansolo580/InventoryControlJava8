@@ -102,7 +102,10 @@ public class modifyPartController implements Initializable {
     }
 
     @FXML public void modifyPartSave(ActionEvent actionEvent) throws IOException {
-        if (Integer.parseInt(modifyPartStock.getText()) < Integer.parseInt(modifyPartMin.getText())) {
+        if (modifyPartStock.getText().isEmpty()) {
+            alertMessages.errorCount(8, modifyPartStock);
+        }
+        else if (Integer.parseInt(modifyPartStock.getText()) < Integer.parseInt(modifyPartMin.getText())) {
             alertMessages.errorCount(1, modifyPartStock);
         }
         else if (Integer.parseInt(modifyPartStock.getText()) > Integer.parseInt(modifyPartMax.getText())) {
@@ -110,6 +113,9 @@ public class modifyPartController implements Initializable {
         }
         else if (modifyPartName.getText().isEmpty()) {
             alertMessages.errorCount(3, modifyPartName);
+        }
+        else if (modifyPartPrice.getText().isEmpty()) {
+            alertMessages.errorCount(8, modifyPartPrice);
         }
         else if (Double.parseDouble(modifyPartPrice.getText()) <= 0){
             alertMessages.errorCount(7, modifyPartPrice);

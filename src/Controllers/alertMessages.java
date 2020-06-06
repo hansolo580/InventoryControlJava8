@@ -38,6 +38,10 @@ public class alertMessages {
             alert.setHeaderText("Insufficient Price");
             alert.setContentText("Price cannot be equal to or less than 0.");
         }
+        if (code == 8) {
+            alert.setHeaderText("Missing Field");
+            alert.setContentText("Name, Price, and Inventory fields are mandatory.");
+        }
         alert.showAndWait();
     }
 

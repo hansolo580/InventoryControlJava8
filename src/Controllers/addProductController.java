@@ -154,7 +154,13 @@ public class addProductController implements Initializable {
         for (Part value : associatedPartsList) {
             minCost += value.getPrice();
         }
-        if (Double.parseDouble(NewProductPrice.getText()) < minCost) {
+        if (NewProductPrice.getText().isEmpty()) {
+            alertMessages.errorCount(8, NewProductPrice);
+        }
+        else if (NewProductStock.getText().isEmpty()) {
+            alertMessages.errorCount(8, NewProductStock);
+        }
+        else if (Double.parseDouble(NewProductPrice.getText()) < minCost) {
             alertMessages.errorCount(4, NewProductPrice);
         }
         else if (Integer.parseInt(NewProductStock.getText()) < Integer.parseInt(NewProductMin.getText())) {

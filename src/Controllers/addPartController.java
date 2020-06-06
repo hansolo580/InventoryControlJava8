@@ -117,7 +117,13 @@ public class addPartController implements Initializable {
     }
 
     @FXML private void addPartSave(ActionEvent actionEvent) {
-        if (Integer.parseInt(NewStockField.getText()) < Integer.parseInt(NewMinField.getText())) {
+        if (NewPriceField.getText().isEmpty()) {
+            alertMessages.errorCount(8, NewPriceField);
+        }
+        else if (NewStockField.getText().isEmpty()) {
+            alertMessages.errorCount(8, NewStockField);
+        }
+        else if (Integer.parseInt(NewStockField.getText()) < Integer.parseInt(NewMinField.getText())) {
             alertMessages.errorCount(1, NewStockField);
         }
         else if (Integer.parseInt(NewStockField.getText()) > Integer.parseInt(NewMaxField.getText())) {

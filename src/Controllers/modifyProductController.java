@@ -92,8 +92,14 @@ public class modifyProductController implements Initializable {
         for (Part value : associatedPartsList) {
             minCost += value.getPrice();
         }
-        if (Double.parseDouble(modifyProductPrice.getText()) < minCost) {
+        if (modifyProductPrice.getText().isEmpty()) {
+            alertMessages.errorCount(8, modifyProductPrice);
+        }
+        else if (Double.parseDouble(modifyProductPrice.getText()) < minCost) {
             alertMessages.errorCount(4, modifyProductPrice);
+        }
+        else if (modifyProductStock.getText().isEmpty()) {
+            alertMessages.errorCount(8, modifyProductStock);
         }
         else if (Integer.parseInt(modifyProductStock.getText()) < Integer.parseInt(modifyProductMin.getText())) {
             alertMessages.errorCount(1, modifyProductStock);
