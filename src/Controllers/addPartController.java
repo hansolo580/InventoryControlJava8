@@ -123,7 +123,16 @@ public class addPartController implements Initializable {
         else if (Integer.parseInt(NewStockField.getText()) > Integer.parseInt(NewMaxField.getText())) {
             alertMessages.errorCount(1, NewStockField);
         }
+        else if (NewNameField.getText().isEmpty()) {
+            alertMessages.errorCount(3, NewNameField);
+        }
+        else if (Double.parseDouble(NewPriceField.getText()) <= 0){
+            alertMessages.errorCount(7, NewPriceField);
+        }
         else if (radioInternal.isSelected()) {
+            if (!NewFlexField.getText().trim().matches("[0-9]*")) {
+                alertMessages.errorCount(2, NewFlexField);
+            }
             addInternal();
             changeScreenHome(actionEvent);
         }

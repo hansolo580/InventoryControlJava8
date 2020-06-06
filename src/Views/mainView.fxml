@@ -73,12 +73,12 @@
                         </TableColumn>
                         <TableColumn fx:id="PartStockCol" minWidth="7.0" prefWidth="100.0" text="Inventory Level">
                             <cellValueFactory>
-                                <PropertyValueFactory property="price" />
+                                <PropertyValueFactory property="stock" />
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn fx:id="PartPriceCol" minWidth="0.0" prefWidth="116.0" text="Price/Cost per Unit">
                             <cellValueFactory>
-                                <PropertyValueFactory property="stock" />
+                                <PropertyValueFactory property="price" />
                             </cellValueFactory>
                         </TableColumn>
                     </columns>

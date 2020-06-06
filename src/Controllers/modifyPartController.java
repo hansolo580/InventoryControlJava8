@@ -105,14 +105,23 @@ public class modifyPartController implements Initializable {
         if (Integer.parseInt(modifyPartStock.getText()) < Integer.parseInt(modifyPartMin.getText())) {
             alertMessages.errorCount(1, modifyPartStock);
         }
-        if (Integer.parseInt(modifyPartStock.getText()) > Integer.parseInt(modifyPartMax.getText())) {
+        else if (Integer.parseInt(modifyPartStock.getText()) > Integer.parseInt(modifyPartMax.getText())) {
             alertMessages.errorCount(1, modifyPartStock);
         }
-        if (inHouseButton.isSelected()) {
+        else if (modifyPartName.getText().isEmpty()) {
+            alertMessages.errorCount(3, modifyPartName);
+        }
+        else if (Double.parseDouble(modifyPartPrice.getText()) <= 0){
+            alertMessages.errorCount(7, modifyPartPrice);
+        }
+        else if (inHouseButton.isSelected()) {
+            if (!modifyPartFlex.getText().trim().matches("[0-9]*")) {
+                alertMessages.errorCount(2, modifyPartFlex);
+            }
             modifyItemInternal();
             changeScreenHome(actionEvent);
         }
-        if (outsourcedButton.isSelected()) {
+        else if (outsourcedButton.isSelected()) {
             modifyItemExternal();
             changeScreenHome(actionEvent);
         }

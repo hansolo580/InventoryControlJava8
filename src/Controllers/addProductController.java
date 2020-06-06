@@ -108,9 +108,21 @@ public class addProductController implements Initializable {
 
     @FXML private void addPart(ActionEvent actionEvent) {
         Part newPart = partSearchTableView.getSelectionModel().getSelectedItem();
+        boolean duplicatePart = false;
 
+        if (newPart != null) {
+            int newPartID = newPart.getID();
+            for (Part part : associatedPartsList) {
+                if (part.getID() == newPartID) {
+                    alertMessages.errorCount(5, NewProductID);
+                    duplicatePart = true;
+                }
+            }
+        }
 
-        if (newPart != null) associatedPartsList.add(newPart);
+        if (!duplicatePart) {
+            associatedPartsList.add(newPart);
+        }
 
         associatedPartsTableView.setItems(associatedPartsList);
     }
@@ -138,11 +150,27 @@ public class addProductController implements Initializable {
     }
 
     public void addProductSave() {
-        if (Integer.parseInt(NewProductStock.getText()) < Integer.parseInt(NewProductMin.getText())) {
+        double minCost = 0;
+        for (Part value : associatedPartsList) {
+            minCost += value.getPrice();
+        }
+        if (Double.parseDouble(NewProductPrice.getText()) < minCost) {
+            alertMessages.errorCount(4, NewProductPrice);
+        }
+        else if (Integer.parseInt(NewProductStock.getText()) < Integer.parseInt(NewProductMin.getText())) {
             alertMessages.errorCount(1, NewProductStock);
         }
         else if (Integer.parseInt(NewProductStock.getText()) > Integer.parseInt(NewProductMax.getText())) {
             alertMessages.errorCount(1, NewProductStock);
+        }
+        else if (NewProductName.getText().isEmpty()) {
+            alertMessages.errorCount(3, NewProductName);
+        }
+        else if (Double.parseDouble(NewProductPrice.getText()) <= 0){
+            alertMessages.errorCount(7, NewProductPrice);
+        }
+        else if (associatedPartsList.isEmpty()) {
+            alertMessages.errorCount(6, NewProductID);
         }
         else {
             Product newProduct = new Product(Integer.parseInt(NewProductID.getText()), NewProductName.getText(),

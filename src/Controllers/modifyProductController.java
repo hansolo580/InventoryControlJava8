@@ -88,11 +88,27 @@ public class modifyProductController implements Initializable {
     }
 
     private void saveProduct() {
-        if (Integer.parseInt(modifyProductStock.getText()) < Integer.parseInt(modifyProductMin.getText())) {
+        double minCost = 0;
+        for (Part value : associatedPartsList) {
+            minCost += value.getPrice();
+        }
+        if (Double.parseDouble(modifyProductPrice.getText()) < minCost) {
+            alertMessages.errorCount(4, modifyProductPrice);
+        }
+        else if (Integer.parseInt(modifyProductStock.getText()) < Integer.parseInt(modifyProductMin.getText())) {
             alertMessages.errorCount(1, modifyProductStock);
         }
-        if (Integer.parseInt(modifyProductStock.getText()) > Integer.parseInt(modifyProductMax.getText())) {
+        else if (Integer.parseInt(modifyProductStock.getText()) > Integer.parseInt(modifyProductMax.getText())) {
             alertMessages.errorCount(1, modifyProductStock);
+        }
+        else if (modifyProductName.getText().isEmpty()) {
+            alertMessages.errorCount(3, modifyProductName);
+        }
+        else if (Double.parseDouble(modifyProductPrice.getText()) <= 0){
+            alertMessages.errorCount(7, modifyProductPrice);
+        }
+        else if (associatedPartsList.isEmpty()) {
+            alertMessages.errorCount(6, modifyProductID);
         }
         else {
             Product newProduct = new Product(Integer.parseInt(modifyProductID.getText()), modifyProductName.getText(),
@@ -135,7 +151,22 @@ public class modifyProductController implements Initializable {
 
     @FXML private void addPart(ActionEvent event) {
         Part newPart = partSearchTable.getSelectionModel().getSelectedItem();
-        associatedPartsList.add(newPart);
+        boolean duplicatePart = false;
+
+        if (newPart != null) {
+            int newPartID = newPart.getID();
+            for (Part part : associatedPartsList) {
+                if (part.getID() == newPartID) {
+                    alertMessages.errorCount(5, modifyProductID);
+                    duplicatePart = true;
+                }
+            }
+        }
+
+        if (!duplicatePart) {
+            associatedPartsList.add(newPart);
+        }
+
         associatedPartsTable.setItems(associatedPartsList);
     }
 
